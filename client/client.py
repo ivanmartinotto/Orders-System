@@ -11,7 +11,7 @@ ORDERS = ["pizza", "cheeseburger", "sushi", "tacos", "ice cream"]
 # main client function
 def client():
     context = zmq.Context()
-    socket = context.scoket(zmq.DEALER)
+    socket = context.socket(zmq.DEALER)
 
     # unique identity for the broker to know who to respond
     socket.identity = CLIENT_ID.encode()
