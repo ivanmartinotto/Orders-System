@@ -31,3 +31,8 @@ def monitor():
             detail = event.split(":", 1)[1]
             print(f"{hour:<12} {'CONCLUDED':<20} {detail}")
             print(f" Recebidos: {counters['Received']} | Concluídos: {counters['Concluded']}")
+
+
+if __name__ == "__main__":
+    time.sleep(2)
+    monitor()
