@@ -41,6 +41,16 @@ services:
     networks:
       - app-network
 
+  monitor:
+    build: ./monitor
+    container_name: monitor
+    environment:
+      - BROKER_HOST=broker
+    depends_on:
+      - broker
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
