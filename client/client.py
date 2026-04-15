@@ -19,16 +19,17 @@ def client():
 
     for i in range(5): # send 5 orders
         order = f"{i+1} --- {random.choice(ORDERS)}"
-        print(f"[{CLIENT_ID}] Sending order: {order}")
+        print(f"[{CLIENT_ID}] Sending order: {order}", flush=True)
         socket.send_string(order)
 
         # wait for response
-        response = socket.recv_string()
-        print(f"[{CLIENT_ID}] Response received: {response}")
+        frames   = socket.recv_multipart()
+        response = frames[-1].decode()
+        print(f"[{CLIENT_ID}] Response received: {response}", flush=True)
 
         time.sleep(random.uniform(0.5, 2))
 
-    print(f"[CLIENT_ID] All orders concluded.")
+    print(f"[CLIENT_ID] All orders concluded.", flush=True)
 
 if __name__ == "__main__":
     time.sleep(2) # wait broker go up

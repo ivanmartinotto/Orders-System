@@ -11,7 +11,7 @@ def broker():
     frontend.bind("tcp://*:5555")
 
     # socket that comunicates with the Workers
-    backend = context.socket(zmq.ROUTER)
+    backend = context.socket(zmq.DEALER)
     backend.bind("tcp://*:5556")
 
     # socket that publishes events for the Monitor

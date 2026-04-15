@@ -9,9 +9,9 @@ WORKER_ID   = os.getenv("WORKER_ID", "worker-1")
 
 def process_order(order: str) -> str:
     # emulates the praparation time of the order
-    time = random.uniform(10, 30)
-    print(f"[{WORKER_ID}] Processing '{order}' (it's going to take {time:.1f}s)...")
-    time.sleep(time)
+    delay = random.uniform(10, 30)
+    print(f"[{WORKER_ID}] Processing '{order}' (it's going to take {delay:.1f}s)...", flush=True)
+    time.sleep(delay)
     return f"READY:{order}:by:{WORKER_ID}"
 
 def worker():
@@ -27,7 +27,7 @@ def worker():
 
         # Processa em thread separada para não bloquear novos pedidos
         def handle(ident, ped):
-            response = process_order(ord)
+            response = process_order(order)
             socket.send_multipart([ident, b"", response.encode()])
 
         t = threading.Thread(target=handle, args=(identity, order))
