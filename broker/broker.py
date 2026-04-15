@@ -30,13 +30,13 @@ def broker():
         # Client message arrived -> send to Worker
         if frontend in sockets:
             msg = frontend.recv_multipart()
-            publisher.send_string(f"ORDER RECEIVED: {msg[-1].decode()}")
+            publisher.send_string(f"ORDER RECEIVED:{msg[-1].decode()}")
             backend.send_multipart(msg)
 
         # Worker's response arrived -> send back to the right client
         if backend in sockets:
             msg = backend.recv_multipart()
-            publisher.send_string(f"ORDER CONCLUDED: {msg[-1].decode()}")
+            publisher.send_string(f"ORDER CONCLUDED:{msg[-1].decode()}")
             frontend.send_multipart(msg)
 
 if __name__ == "__main__":
