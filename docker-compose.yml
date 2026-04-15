@@ -1,0 +1,47 @@
+services:
+
+  broker:
+    build: ./broker
+    container_name: broker
+    ports:
+      - "5555:5555"
+      - "5556:5556"
+      - "5557:5557"
+    networks:
+      - app-network
+
+  client-1:
+    build: ./client
+    container_name: client-1
+    environment:
+      - BROKER_HOST=broker
+      - CLIENT_ID=client-1
+    depends_on:
+      - broker  # only compiles after the broker
+    networks:
+      - app-network
+
+  client-2:
+    build: ./client
+    container_name: client-2
+    environment:
+      - BROKER_HOST=broker
+      - CLIENT_ID=client-2
+    depends_on:
+      - broker  # only compiles after the broker
+    networks:
+      - app-network
+
+  worker:
+    build: ./worker
+    environment:
+      - BROKER_HOST=broker
+    depends_on:
+      - broker
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+    
